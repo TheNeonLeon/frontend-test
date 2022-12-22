@@ -2,22 +2,32 @@ import Head from 'next/head'
 import Image from 'next/image'
 import { Inter } from '@next/font/google'
 import styles from '../styles/Home.module.css'
-import  db  from '../firebase/firebaseConfig'
-import { collection, doc, getDocs } from "firebase/firestore"; 
+import { useEffect, useState } from 'react'
+import { getUsers } from '../utils/userApi'
+import db from '../firebase/firebaseConfig'
+
 
 
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
+  const [userInfo, setUserInfo] = useState<any>([]);
 
-  async function getUsers(db:any) {
-    const userCollection = collection(db, 'users');
-    const snapshot = await getDocs(userCollection);
-    const list = snapshot.docs.map(doc => doc.data());
-    return list;
-  }
+  useEffect(() => {
+     //Call API function and store data to state
+     const getUserData = async () => {
+      await getUsers(db).then(data =>{
+        if(!data){
+          console.log("something went wrong...")
+          return;
+        }
+        setUserInfo(data);
+        console.log(data);
+      });
+    };
 
-  console.log(getUsers(db).then(data => console.log(data)));
+    getUserData();
+  }, [])
 
   return (
     <>
