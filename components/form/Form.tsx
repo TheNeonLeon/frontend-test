@@ -1,4 +1,21 @@
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { addUser } from "../../utils/userApi";
+import { FormDataProps } from "./type";
+
+
 export default function Form() {
+  const { register, handleSubmit, watch, formState: { errors } } = useForm<FormDataProps>();
+  const [userInfo, setUserInfo] = useState([]);
+
+
+  const onSubmit = async (data:FormDataProps, e) => {
+    e.preventDefault();
+    console.log(data);
+    const userInfo: any = await addUser(data?.firstName, data?.lastName,data?.email,data?.country,data?.streetAdress,data?.city,data?.postalCode);
+    setUserInfo(userInfo);
+  };
+
     return(
       <div id="form-container">
         <div className="mt-10 sm:mt-0">
@@ -6,11 +23,11 @@ export default function Form() {
           <div className="md:col-span-1">
             <div className="px-4 sm:px-0">
               <h3 className="text-lg font-medium leading-6 text-gray-900">Personal Information</h3>
-              <p className="mt-1 text-sm text-gray-600">Use a permanent address where you can receive mail.</p>
+              <p className="mt-1 text-sm text-gray-600">Create a person</p>
             </div>
           </div>
           <div className="mt-5 md:col-span-2 md:mt-0">
-            <form action="#" method="POST">
+            <form onSubmit={handleSubmit(onSubmit)}>
               <div className="overflow-hidden shadow sm:rounded-md">
                 <div className="bg-white px-4 py-5 sm:p-6">
                   <div className="grid grid-cols-6 gap-6">
@@ -20,9 +37,7 @@ export default function Form() {
                       </label>
                       <input
                         type="text"
-                        name="first-name"
-                        id="first-name"
-                        autoComplete="given-name"
+                        {...register("firstName")}
                         className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                       />
                     </div>
@@ -33,9 +48,7 @@ export default function Form() {
                       </label>
                       <input
                         type="text"
-                        name="last-name"
-                        id="last-name"
-                        autoComplete="family-name"
+                        {...register("lastName")}
                         className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                       />
                     </div>
@@ -46,8 +59,7 @@ export default function Form() {
                       </label>
                       <input
                         type="text"
-                        name="email-address"
-                        id="email-address"
+                        {...register("email")}
                         autoComplete="email"
                         className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                       />
@@ -59,7 +71,7 @@ export default function Form() {
                       </label>
                       <select
                         id="country"
-                        name="country"
+                        {...register("country")}
                         autoComplete="country-name"
                         className="mt-1 block w-full rounded-md border border-gray-300 bg-white py-2 px-3 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                       >
@@ -76,8 +88,7 @@ export default function Form() {
                       </label>
                       <input
                         type="text"
-                        name="street-address"
-                        id="street-address"
+                        {...register("streetAdress")}
                         autoComplete="street-address"
                         className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                       />
@@ -89,8 +100,7 @@ export default function Form() {
                       </label>
                       <input
                         type="text"
-                        name="city"
-                        id="city"
+                        {...register("city")}
                         autoComplete="address-level2"
                         className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                       />
@@ -102,8 +112,7 @@ export default function Form() {
                       </label>
                       <input
                         type="text"
-                        name="postal-code"
-                        id="postal-code"
+                        {...register("postalCode")}
                         autoComplete="postal-code"
                         className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                       />
@@ -115,7 +124,7 @@ export default function Form() {
                     type="submit"
                     className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                   >
-                    Save
+                    Add person
                   </button>
                 </div>
               </div>

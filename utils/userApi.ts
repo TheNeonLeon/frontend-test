@@ -1,5 +1,5 @@
 import db from "../firebase/firebaseConfig";
-import { collection, addDoc, getDocs } from "firebase/firestore";
+import { collection, addDoc, getDocs, deleteDoc, doc  } from "firebase/firestore";
 
 export const getUsers = async (db:any) => {
   const userCollection = collection(db, "users");
@@ -8,17 +8,17 @@ export const getUsers = async (db:any) => {
   return list;
 };
 
-export const addUser = async () => {
+export const addUser = async (firstName: any, lastName: any, email: any, country: any, streetAdress: any, city: any, postalCode:any) => {
   try {
     const docRef = await addDoc(collection(db, "users"), {
      userInfo: {
-      firstName: "Billy",
-      lastName: "Bob",
-      email: "bob@mail.com",
-      country: "Sweden",
-      streetAdress: "pepparkaksgatan 2",
-      city: "Gothenburg",
-      postalCode: 43345,
+      firstName: firstName,
+      lastName: lastName,
+      email: email,
+      country: country,
+      streetAdress: streetAdress,
+      city: city,
+      postalCode: postalCode,
       company: {
         companyName: "Telia",
         isActive: true
@@ -30,3 +30,8 @@ export const addUser = async () => {
     console.error("Error adding document: ", e);
   }
 };
+
+export const deleteUser = async () => {
+  await deleteDoc(doc(db, "users", "MYjFRtVQIUw7al2KeHX5"));
+
+}

@@ -3,7 +3,7 @@ import Image from 'next/image'
 import { Inter } from '@next/font/google'
 import styles from '../styles/Home.module.css'
 import { useEffect, useState } from 'react'
-import { getUsers } from '../utils/userApi'
+import { deleteUser, getUsers } from '../utils/userApi'
 import db from '../firebase/firebaseConfig'
 import { addUser } from '../utils/userApi'
 import Form from '../components/form/Form'
@@ -40,6 +40,7 @@ export default function Home() {
       <main className={styles.main}>
         <Form />
         <button onClick={addUser}>Click</button>
+        <button onClick={deleteUser}>delete</button>
       </main>
     </>
   )
