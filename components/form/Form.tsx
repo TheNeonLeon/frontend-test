@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { addUser } from "../../utils/userApi";
+import db from "../../firebase/firebaseConfig";
+import { addUser, getUsers, updateUser } from "../../utils/userApi";
 import { FormDataProps } from "./type";
 
 
@@ -8,13 +9,15 @@ export default function Form() {
   const { register, handleSubmit, watch, formState: { errors } } = useForm<FormDataProps>();
   const [userInfo, setUserInfo] = useState([]);
 
-
-  const onSubmit = async (data:FormDataProps, e) => {
+  const onSubmit = async (data:FormDataProps, e:any) => {
     e.preventDefault();
     console.log(data);
-    const userInfo: any = await addUser(data?.firstName, data?.lastName,data?.email,data?.country,data?.streetAdress,data?.city,data?.postalCode);
+    const userInfo: any = await addUser(data?.id, data?.firstName, data?.lastName,data?.email,data?.country,data?.streetAdress,data?.city,data?.postalCode, data?.company.companyName, data?.company.isActive);
     setUserInfo(userInfo);
+    console.log(userInfo);
+    
   };
+
 
     return(
       <div id="form-container">
@@ -117,6 +120,23 @@ export default function Form() {
                         className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                       />
                     </div>
+
+                    <div className="col-span-6 sm:col-span-3 lg:col-span-2">
+                      <label htmlFor="postal-code" className="block text-sm font-medium text-gray-700">
+                        Company
+                      </label>
+                      <select  
+                        {...register("company")}
+                        autoComplete="postal-code"
+                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                        <option disabled>Select company</option>
+                        <option value="No company">No comapny</option>
+                        <option value="Telia">Telia</option>
+                        <option value="Ericsson">Ericsson</option>
+                      </select>
+                      
+                    </div>
+                    
                   </div>
                 </div>
                 <div className="bg-gray-50 px-4 py-3 text-right sm:px-6">

@@ -1,33 +1,25 @@
-import Head from 'next/head'
-import Image from 'next/image'
-import { Inter } from '@next/font/google'
-import styles from '../styles/Home.module.css'
-import { useEffect, useState } from 'react'
-import { deleteUser, getUsers } from '../utils/userApi'
-import db from '../firebase/firebaseConfig'
-import { addUser } from '../utils/userApi'
-import Form from '../components/form/Form'
+import Head from "next/head";
+import Image from "next/image";
+import { Inter } from "@next/font/google";
+import styles from "../styles/Home.module.css";
+import { useEffect, useState } from "react";
+import { deleteUser, getUsers, updateUser } from "../utils/userApi";
+import db from "../firebase/firebaseConfig";
+import { addUser } from "../utils/userApi";
+import Form from "../components/form/Form";
+import Router, { useRouter } from "next/router";
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
-  const [userInfo, setUserInfo] = useState<any>([]);
-
-  useEffect(() => {
-     //Call API function and store data to state
-     const getUserData = async () => {
-      await getUsers(db).then(data =>{
-        if(!data){
-          console.log("something went wrong...")
-          return;
-        }
-        setUserInfo(data);
-        console.log(data);
-      });
-    };
-
-    getUserData();
-  }, [])
+  console.log(getUsers(db).then((response) => console.log(response)));
+  // console.log(updateUser().then(response => console.log(response)))
+  const router = useRouter();
+  console.log(router);
+  const handleClick = (e) => {
+    e.preventDefault();
+    router.push('/company')
+  };
 
   return (
     <>
@@ -39,9 +31,12 @@ export default function Home() {
       </Head>
       <main className={styles.main}>
         <Form />
-        <button onClick={addUser}>Click</button>
+        <button onClick={handleClick}>
+          Company page
+        </button>
+        <button onClick={updateUser}>remove from company</button>
         <button onClick={deleteUser}>delete</button>
       </main>
     </>
-  )
+  );
 }
