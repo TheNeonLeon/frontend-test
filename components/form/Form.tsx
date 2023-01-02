@@ -10,9 +10,8 @@ export default function Form() {
   const [userInfo, setUserInfo] = useState([]);
 
   const onSubmit = async (data:FormDataProps, e:any) => {
-    e.preventDefault();
     console.log(data);
-    const userInfo: any = await addUser(data?.id, data?.firstName, data?.lastName,data?.email,data?.country,data?.streetAdress,data?.city,data?.postalCode, data?.company.companyName, data?.company.isActive);
+    const userInfo: any = await addUser(data?.firstName, data?.lastName,data?.email,data?.country,data?.streetAdress,data?.city,data?.postalCode);
     setUserInfo(userInfo);
     console.log(userInfo);
     
@@ -121,11 +120,11 @@ export default function Form() {
                       />
                     </div>
 
-                    <div className="col-span-6 sm:col-span-3 lg:col-span-2">
+                    {/* <div className="col-span-6 sm:col-span-3 lg:col-span-2">
                       <label htmlFor="postal-code" className="block text-sm font-medium text-gray-700">
                         Company
                       </label>
-                      <select  
+                      <select
                         {...register("company")}
                         autoComplete="postal-code"
                         className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
@@ -135,7 +134,7 @@ export default function Form() {
                         <option value="Ericsson">Ericsson</option>
                       </select>
                       
-                    </div>
+                    </div> */}
                     
                   </div>
                 </div>
