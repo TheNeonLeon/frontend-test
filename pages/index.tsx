@@ -12,16 +12,15 @@ import { GetStaticProps } from "next";
 
 const inter = Inter({ subsets: ["latin"] });
 
- function Home() {
+function Home() {
   getUsers(db).then((response) => console.log(response));
-  
+
   const router = useRouter();
   console.log(router);
-  const handleClick = (e:any) => {
+  const handleClick = (e: any) => {
     e.preventDefault();
-    router.push('/company')
+    router.push("/company");
   };
-  
 
   return (
     <>
@@ -31,17 +30,14 @@ const inter = Inter({ subsets: ["latin"] });
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className={styles.main}>
+      <main>
         <Form />
-        <button onClick={handleClick}>
-          Company page
-        </button>
+        <button onClick={handleClick}>Company page</button>
         <button onClick={updateUser}>remove from company</button>
         <button onClick={deleteUser}>delete</button>
       </main>
     </>
   );
 }
-
 
 export default Home;
