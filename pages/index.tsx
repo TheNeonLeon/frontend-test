@@ -16,12 +16,14 @@ function Home() {
   getUsers(db).then((response) => console.log(response));
 
   const router = useRouter();
-  console.log(router);
-  const handleClick = (e: any) => {
+  const toCompanyPage = (e: any) => {
     e.preventDefault();
     router.push("/company");
   };
-
+  const toProfilePage = (e: any) => {
+    e.preventDefault();
+    router.push("/profile");
+  };
   return (
     <>
       <Head>
@@ -32,7 +34,8 @@ function Home() {
       </Head>
       <main>
         <Form />
-        <button onClick={handleClick}>Company page</button>
+        <button onClick={toCompanyPage}>Company page</button>
+        <button onClick={toProfilePage}>Profile page</button>
         <button onClick={updateUser}>remove from company</button>
         <button onClick={deleteUser}>delete</button>
       </main>

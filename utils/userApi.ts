@@ -10,10 +10,14 @@ import {
 } from "firebase/firestore";
 
 export const getUsers = async (db: any) => {
-  const userCollection = collection(db, "users");
-  const snapshot = await getDocs(userCollection);
-  const list = snapshot.docs.map((doc) => doc.data());
-  return list;
+try {
+    const userCollection = collection(db, "users");
+    const snapshot = await getDocs(userCollection);
+    const list = snapshot.docs.map((doc) => doc.data());
+    return list;
+} catch (error) {
+  console.error("Error getting user data", error)
+}
 };
 
 export const addUser = async (

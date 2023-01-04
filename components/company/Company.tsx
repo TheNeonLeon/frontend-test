@@ -9,7 +9,6 @@ import {
 } from "../../utils/userApi";
 import { FormDataProps } from "../form/type";
 import { CompanyProps } from "./type";
-
 export default function CompanyForm() {
   const {
     register,
@@ -36,8 +35,9 @@ export default function CompanyForm() {
   return (
     <div className="form-container">
       <div className="mt-5 md:col-span-2 md:mt-0">
-        {company.map((e: CompanyProps) => {
-          return <li>{e.companyName}</li>;
+      <h1 className="text-4xl font-extrabold dark:text-white">Select company:</h1>
+        {company.map((data: CompanyProps) => {
+          return <li>{data.companyName}</li>;
         })}
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="col-span-6 sm:col-span-3">
