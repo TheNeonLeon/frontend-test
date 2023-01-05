@@ -1,5 +1,5 @@
 import Head from "next/head";
-import ProfileList from "../components/profileList/profileList";
+import ProfileList from "../components/profileList/ProfileList";
 
 export default function Profile() {
 

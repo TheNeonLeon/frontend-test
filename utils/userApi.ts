@@ -66,12 +66,11 @@ export const createCompany = async (companyName: string) => {
 
     const docRef = await addDoc(collection(db, "companies"), {
       companyName: companyName,
-      users: {},
     });
     console.log("Document written with ID: ", docRef.id);
 
     if (list) {
-      console.log(list);
+      console.log("list:",list);
     } else {
       console.log("Document does not exist");
     }

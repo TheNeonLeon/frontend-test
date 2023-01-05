@@ -1,0 +1,8 @@
+.card{
+    display: flex;
+    justify-content: center;
+}
+.user-card{
+    border: 1px solid black;
+
+}
