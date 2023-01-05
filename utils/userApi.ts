@@ -40,6 +40,10 @@ export const addUser = async (
         city: city,
         postalCode: postalCode,
       },
+      companyInfo: {
+        companyName: "",
+        isActive: false,
+      },
     });
     console.log("Document written with ID: ", docRef.id);
   } catch (e) {
@@ -79,21 +83,20 @@ export const createCompany = async (companyName: string) => {
   }
 };
 
-export const addCompany = async (companyName: string, isActive: boolean) => {
+export const updateUserDetails = async (isActive: boolean) => {
   let bool = true;
   const data = {
-    company: {
-      companyName: companyName,
+    companyInfo: {
       isActive: !isActive,
     },
   };
 
   try {
-    const snapshot = await getDoc(doc(db, "users", "SDkq3XKsyzcJh64J41Dh"));
+    const snapshot = await getDoc(doc(db, "users", "AkxVG1g6zUGiT8PMu1Dw"));
 
     if (snapshot.exists()) {
       console.log(snapshot.data());
-      updateDoc(snapshot.ref, data);
+      await updateDoc(snapshot.ref, data);
     } else {
       console.log("Document does not exist");
     }
