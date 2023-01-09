@@ -83,10 +83,11 @@ export const createCompany = async (companyName: string) => {
   }
 };
 
-export const updateUserDetails = async (isActive: boolean) => {
+export const updateUserDetails = async (companyName: string, isActive: boolean) => {
   let bool = true;
   const data = {
     companyInfo: {
+      companyName: companyName,
       isActive: !isActive,
     },
   };

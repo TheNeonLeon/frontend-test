@@ -10,7 +10,7 @@ export default function Profile() {
         handleSubmit,
         watch,
         formState: { errors },
-      } = useForm<FormDataProps>();
+      } = useForm<any>();
       
   const [users, setUsers] = useState([]);
   const [company, setCompany] = useState([]);
@@ -18,6 +18,7 @@ export default function Profile() {
   const onSubmit = async (data: any, e: any) => {
     console.log(data);
     const userInfo: any = await updateUserDetails(
+        data?.companyName,
       data?.isActive,
     );
     console.log(userInfo);
@@ -43,7 +44,6 @@ export default function Profile() {
       <ul>
         <>
         {users.map((data: any) => {
-          console.log(data.userInfo);
 
           return (
             <>
@@ -62,22 +62,32 @@ export default function Profile() {
             <input
               type="checkbox"
               {...register("company.isActive")}
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+              className="rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
             />
-              <button>Add person to company</button>
+              {company.map((companyData:any) => {
+                console.log(companyData);
+                
+            return(
+                <>
+             <input
+              type="checkbox"
+              value={companyData.companyName}
+              {...register("companyName")}
+              className="shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            />
+                <li>{companyData.companyName}</li>
+                </>
+            )
+        })}
+            <button>Add person to company</button>
+            <input type="submit" />
             </form>
             : ""
             }
             </>
           );
         })}
-        {company.map((companyData:any) => {
-            return(
-                <>
-                <li>{companyData.companyName}</li>
-                </>
-            )
-        })}
+
         </>
       </ul>
       
