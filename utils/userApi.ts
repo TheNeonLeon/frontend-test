@@ -13,7 +13,8 @@ export const getUsers = async (db: any) => {
 try {
     const userCollection = collection(db, "users");
     const snapshot = await getDocs(userCollection);
-    const list = snapshot.docs.map((doc) => doc.data());
+    const list = snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
+    
     return list;
 } catch (error) {
   console.error("Error getting user data", error)
@@ -45,6 +46,7 @@ export const addUser = async (
         isActive: false,
       },
     });
+    
     console.log("Document written with ID: ", docRef.id);
   } catch (e) {
     console.error("Error adding document: ", e);
@@ -83,7 +85,7 @@ export const createCompany = async (companyName: string) => {
   }
 };
 
-export const updateUserDetails = async (companyName: string, isActive: boolean) => {
+export const updateUserDetails = async (id:number, companyName: string, isActive: boolean) => {
   let bool = true;
   const data = {
     companyInfo: {
@@ -93,11 +95,13 @@ export const updateUserDetails = async (companyName: string, isActive: boolean) 
   };
 
   try {
-    const snapshot = await getDoc(doc(db, "users", "AkxVG1g6zUGiT8PMu1Dw"));
+    const snapshot = await getDoc(doc(db, "users", String(id)));
 
     if (snapshot.exists()) {
       console.log(snapshot.data());
-      await updateDoc(snapshot.ref, data);
+      console.log("snapshotID:", snapshot.id);
+      
+      await updateDoc(doc(db, "users", String(id)), data);
     } else {
       console.log("Document does not exist");
     }
