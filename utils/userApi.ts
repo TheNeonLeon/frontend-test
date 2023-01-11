@@ -7,6 +7,7 @@ import {
   updateDoc,
 } from "firebase/firestore";
 
+import Router from 'next/router'
 
 export const getUsers = async (db: any) => {
   try {
@@ -30,6 +31,7 @@ export const deleteUserDataCompany = async (id:string, isActive:boolean, db:any)
   }
     const userDoc = doc(db, "users", id);
     await updateDoc(userDoc, newField);
+    Router.reload();
     console.log("Updated user:", userDoc);
   } catch (error) {
     console.log(error);

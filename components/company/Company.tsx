@@ -48,9 +48,20 @@ export default function CompanyForm() {
   return (
     <div className="form-container">
       <div className="mt-5 md:col-span-2 md:mt-0">
-        <h1 className="text-4xl font-extrabold dark:text-white">
-          Select company:
-        </h1>
+        <h1 className="text-2xl font-extrabold dark:text-white">Companies</h1>
+        {company.map((companyData: CompanyProps) => {
+          return (
+            <>
+              <ul className="border-2 p-2">
+                <li>{companyData.companyName}</li>
+              </ul>
+            </>
+          );
+        })}
+        <div className="pt-7">
+        <h2 className="text-2xl font-extrabold dark:text-white">
+          Users active in companies:
+        </h2>
         {users.map((userData: FormDataProps) => {
           return (
             <>
@@ -81,7 +92,7 @@ export default function CompanyForm() {
             </>
           );
         })}
-
+        </div>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="col-span-6 sm:col-span-3">
             <label
@@ -97,33 +108,34 @@ export default function CompanyForm() {
             />
           </div>
           <div className="flex space-x-3">
-          <button
-            type="submit"
-            className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-          >
-            Create company
-          </button>
-          <button
-          onClick={toHomePage}
-            type="submit"
-            className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-          >
-            <svg className="w-5"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth={1.5}
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-              aria-hidden="true"
+            <button
+              type="submit"
+              className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"
-              />
-            </svg>
-            Go to Home Page
-          </button>
+              Create company
+            </button>
+            <button
+              onClick={toHomePage}
+              type="submit"
+              className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+            >
+              <svg
+                className="w-5"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth={1.5}
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"
+                />
+              </svg>
+              Go to Home Page
+            </button>
           </div>
         </form>
       </div>
