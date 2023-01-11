@@ -10,15 +10,26 @@ import {
 } from "firebase/firestore";
 
 export const getUsers = async (db: any) => {
-try {
+  try {
     const userCollection = collection(db, "users");
     const snapshot = await getDocs(userCollection);
     const list = snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
-    
+
     return list;
-} catch (error) {
-  console.error("Error getting user data", error)
-}
+  } catch (error) {
+    console.error("Error getting user data", error);
+  }
+};
+
+export const getUserDataByCompany = async (companyName:string, db:any) => {
+  try {
+    const userCollection = collection(db, "users");
+    const snapshot = await getDocs(userCollection);
+    const list = snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
+    const test = list.filter((element, index) => element.companyInfo.companyName == companyName)
+    console.log(test);
+    
+  } catch (error) {}
 };
 
 export const addUser = async (
@@ -46,7 +57,7 @@ export const addUser = async (
         isActive: false,
       },
     });
-    
+
     console.log("Document written with ID: ", docRef.id);
   } catch (e) {
     console.error("Error adding document: ", e);
@@ -74,9 +85,9 @@ export const createCompany = async (companyName: string) => {
       companyName: companyName,
     });
     console.log("Document written with ID: ", docRef.id);
-
+    getCompanies(db);
     if (list) {
-      console.log("list:",list);
+      console.log("list:", list);
     } else {
       console.log("Document does not exist");
     }
@@ -85,7 +96,11 @@ export const createCompany = async (companyName: string) => {
   }
 };
 
-export const updateUserDetails = async (id:number, companyName: string, isActive: boolean) => {
+export const updateUserDetails = async (
+  id: number,
+  companyName: string,
+  isActive: boolean
+) => {
   let bool = true;
   const data = {
     companyInfo: {
@@ -100,7 +115,7 @@ export const updateUserDetails = async (id:number, companyName: string, isActive
     if (snapshot.exists()) {
       console.log(snapshot.data());
       console.log("snapshotID:", snapshot.id);
-      
+
       await updateDoc(doc(db, "users", String(id)), data);
     } else {
       console.log("Document does not exist");

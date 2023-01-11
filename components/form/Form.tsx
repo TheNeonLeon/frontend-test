@@ -16,13 +16,13 @@ export default function Form() {
   const onSubmit = async (data: FormDataProps, e: any) => {
     console.log(data);
     const userInfo: any = await addUser(
-      data?.firstName,
-      data?.lastName,
-      data?.email,
-      data?.country,
-      data?.streetAdress,
-      data?.city,
-      data?.postalCode
+      data?.userInfo.firstName,
+      data?.userInfo.lastName,
+      data?.userInfo.email,
+      data?.userInfo.country,
+      data?.userInfo.streetAdress,
+      data?.userInfo.city,
+      data?.userInfo.postalCode
     );
     setUserInfo(userInfo);
     console.log(userInfo);
@@ -54,7 +54,7 @@ export default function Form() {
                       </label>
                       <input
                         type="text"
-                        {...register("firstName")}
+                        {...register("userInfo.firstName")}
                         className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                       />
                     </div>
@@ -68,7 +68,7 @@ export default function Form() {
                       </label>
                       <input
                         type="text"
-                        {...register("lastName")}
+                        {...register("userInfo.lastName")}
                         className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                       />
                     </div>
@@ -82,7 +82,7 @@ export default function Form() {
                       </label>
                       <input
                         type="text"
-                        {...register("email")}
+                        {...register("userInfo.email")}
                         autoComplete="email"
                         className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                       />
@@ -97,7 +97,7 @@ export default function Form() {
                       </label>
                       <select
                         id="country"
-                        {...register("country")}
+                        {...register("userInfo.country")}
                         autoComplete="country-name"
                         className="mt-1 block w-full rounded-md border border-gray-300 bg-white py-2 px-3 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                       >
@@ -117,7 +117,7 @@ export default function Form() {
                       </label>
                       <input
                         type="text"
-                        {...register("streetAdress")}
+                        {...register("userInfo.streetAdress")}
                         autoComplete="street-address"
                         className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                       />
@@ -132,7 +132,7 @@ export default function Form() {
                       </label>
                       <input
                         type="text"
-                        {...register("city")}
+                        {...register("userInfo.city")}
                         autoComplete="address-level2"
                         className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                       />
@@ -147,27 +147,11 @@ export default function Form() {
                       </label>
                       <input
                         type="text"
-                        {...register("postalCode")}
+                        {...register("userInfo.postalCode")}
                         autoComplete="postal-code"
                         className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                       />
                     </div>
-
-                    {/* <div className="col-span-6 sm:col-span-3 lg:col-span-2">
-                      <label htmlFor="postal-code" className="block text-sm font-medium text-gray-700">
-                        Company
-                      </label>
-                      <select
-                        {...register("company")}
-                        autoComplete="postal-code"
-                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
-                        <option disabled>Select company</option>
-                        <option value="No company">No comapny</option>
-                        <option value="Telia">Telia</option>
-                        <option value="Ericsson">Ericsson</option>
-                      </select>
-                      
-                    </div> */}
                   </div>
                 </div>
                 <div className="bg-gray-50 px-4 py-3 text-right sm:px-6">
