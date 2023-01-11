@@ -6,9 +6,7 @@ import {
   deleteDoc,
   doc,
   updateDoc,
-  getDoc,
 } from "firebase/firestore";
-import { useRouter } from "next/router";
 
 
 export const getUsers = async (db: any) => {
@@ -22,16 +20,6 @@ export const getUsers = async (db: any) => {
     console.error("Error getting user data", error);
   }
 };
-
-export const getFilteredUsers = async (firstName: string, companyName: string, db:any) => {
-  const userCollection = collection(db, "users");
-  const snapshot = await getDocs(userCollection);
-  const list = snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
-  const listObject = list.map((data) => ({...data.userInfo, companyName: data.companyInfo.companyName}))
-  const filterData = listObject.filter(e => e)
-  console.log(listObject);
-  
-}
 
 export const deleteUserDataCompany = async (id:string, isActive:boolean, db:any) => {
   try {
@@ -113,8 +101,4 @@ export const createCompany = async (companyName: string) => {
   } catch (e) {
     console.error("Error adding document: ", e);
   }
-};
-
-export const deleteUser = async () => {
-  await deleteDoc(doc(db, "users", "MYjFRtVQIUw7al2KeHX5"));
 };

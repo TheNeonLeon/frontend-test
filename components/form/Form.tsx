@@ -1,9 +1,10 @@
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import db from "../../firebase/firebaseConfig";
 import { addUser, getUsers } from "../../utils/userApi";
 import { FormDataProps } from "./type";
-
+import styles from "./Form.module.css";
 export default function Form() {
   const {
     register,
@@ -12,6 +13,16 @@ export default function Form() {
     formState: { errors },
   } = useForm<FormDataProps>();
   const [userInfo, setUserInfo] = useState([]);
+
+  const router = useRouter();
+  const toCompanyPage = (e: any) => {
+    e.preventDefault();
+    router.push("/company");
+  };
+  const toProfilePage = (e: any) => {
+    e.preventDefault();
+    router.push("/profile");
+  };
 
   const onSubmit = async (data: FormDataProps, e: any) => {
     console.log(data);
@@ -29,20 +40,17 @@ export default function Form() {
   };
 
   return (
-    <div id="form-container">
+    <div className={styles.form}>
       <div className="mt-10 sm:mt-0">
         <div className="md:grid md:grid-cols-3 md:gap-6">
-          <div className="md:col-span-1">
-            <div className="px-4 sm:px-0">
-              <h3 className="text-4xl font-extrabold dark:text-white">
-                Personal Information
-              </h3>
-              <p className="mt-1 text-sm text-gray-600">Create a person</p>
-            </div>
-          </div>
           <div className="mt-5 md:col-span-2 md:mt-0">
             <form onSubmit={handleSubmit(onSubmit)}>
               <div className="overflow-hidden shadow sm:rounded-md">
+                <h3 className="text-4xl font-extrabold dark:text-white">
+                  Personal Information
+                </h3>
+                <p className="mt-1 text-sm text-gray-600">Create a person</p>
+
                 <div className="bg-white px-4 py-5 sm:p-6">
                   <div className="grid grid-cols-6 gap-6">
                     <div className="col-span-6 sm:col-span-3">
@@ -54,6 +62,7 @@ export default function Form() {
                       </label>
                       <input
                         type="text"
+                        required
                         {...register("userInfo.firstName")}
                         className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                       />
@@ -67,6 +76,7 @@ export default function Form() {
                         Last name
                       </label>
                       <input
+                        required
                         type="text"
                         {...register("userInfo.lastName")}
                         className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
@@ -81,6 +91,7 @@ export default function Form() {
                         Email address
                       </label>
                       <input
+                        required
                         type="text"
                         {...register("userInfo.email")}
                         autoComplete="email"
@@ -154,13 +165,29 @@ export default function Form() {
                     </div>
                   </div>
                 </div>
-                <div className="bg-gray-50 px-4 py-3 text-right sm:px-6">
-                  <button
-                    type="submit"
-                    className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                  >
-                    Add person
-                  </button>
+                <div className="flex space-x-60 bg-gray-50 px-4 py-3 text-right sm:px-6">
+                  <div className="flex">
+                    <button
+                      className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                      onClick={toCompanyPage}
+                    >
+                      Company page
+                    </button>
+                    <button
+                      className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                      onClick={toProfilePage}
+                    >
+                      Profile page
+                    </button>
+                  </div>
+                  <div className="flex justify-center">
+                    <button
+                      type="submit"
+                      className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                    >
+                      Add person
+                    </button>
+                  </div>
                 </div>
               </div>
             </form>
