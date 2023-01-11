@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import db from "../../firebase/firebaseConfig";
-import { addUser, getUsers, updateUser } from "../../utils/userApi";
+import { addUser, getUsers } from "../../utils/userApi";
 import { FormDataProps } from "./type";
 
 export default function Form() {

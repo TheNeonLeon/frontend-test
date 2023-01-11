@@ -8,6 +8,8 @@ import {
   updateDoc,
   getDoc,
 } from "firebase/firestore";
+import { useRouter } from "next/router";
+
 
 export const getUsers = async (db: any) => {
   try {
@@ -21,16 +23,33 @@ export const getUsers = async (db: any) => {
   }
 };
 
-export const getUserDataByCompany = async (companyName:string, db:any) => {
+export const getFilteredUsers = async (firstName: string, companyName: string, db:any) => {
+  const userCollection = collection(db, "users");
+  const snapshot = await getDocs(userCollection);
+  const list = snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
+  const listObject = list.map((data) => ({...data.userInfo, companyName: data.companyInfo.companyName}))
+  const filterData = listObject.filter(e => e)
+  console.log(listObject);
+  
+}
+
+export const deleteUserDataCompany = async (id:string, isActive:boolean, db:any) => {
   try {
-    const userCollection = collection(db, "users");
-    const snapshot = await getDocs(userCollection);
-    const list = snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
-    const test = list.filter((element, index) => element.companyInfo.companyName == companyName)
-    console.log(test);
+    const newField = {
+    companyInfo: 
+    {
+      isActive: !isActive
+    }
+  }
+    const userDoc = doc(db, "users", id);
+    await updateDoc(userDoc, newField);
+    console.log("Updated user:", userDoc);
+  } catch (error) {
+    console.log(error);
     
-  } catch (error) {}
+  }
 };
+
 
 export const addUser = async (
   firstName: string,
@@ -94,50 +113,6 @@ export const createCompany = async (companyName: string) => {
   } catch (e) {
     console.error("Error adding document: ", e);
   }
-};
-
-export const updateUserDetails = async (
-  id: number,
-  companyName: string,
-  isActive: boolean
-) => {
-  let bool = true;
-  const data = {
-    companyInfo: {
-      companyName: companyName,
-      isActive: !isActive,
-    },
-  };
-
-  try {
-    const snapshot = await getDoc(doc(db, "users", String(id)));
-
-    if (snapshot.exists()) {
-      console.log(snapshot.data());
-      console.log("snapshotID:", snapshot.id);
-
-      await updateDoc(doc(db, "users", String(id)), data);
-    } else {
-      console.log("Document does not exist");
-    }
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-export const updateUser = async () => {
-  let bool = true;
-  const data = {
-    company: {
-      companyName: "blabla",
-      isActive: !bool,
-    },
-  };
-  const userCollection = collection(db, "users");
-  const snapshot = await getDocs(userCollection);
-  const list = snapshot.docs.map((doc) => doc.id);
-  list.map((id) => console.log(id));
-  return list;
 };
 
 export const deleteUser = async () => {

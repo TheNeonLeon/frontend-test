@@ -2,7 +2,12 @@ import { collection, doc, getDoc, getDocs } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import db from "../../firebase/firebaseConfig";
-import { addUser, createCompany, getCompanies, getUserDataByCompany, getUsers } from "../../utils/userApi";
+import {
+  createCompany,
+  deleteUserDataCompany,
+  getCompanies,
+  getUsers,
+} from "../../utils/userApi";
 import { FormDataProps } from "../form/type";
 import { CompanyProps } from "./type";
 export default function CompanyForm() {
@@ -14,6 +19,7 @@ export default function CompanyForm() {
   } = useForm<CompanyProps>();
   const [users, setUsers] = useState([]);
   const [company, setCompany] = useState([]);
+  const [filteredUsers, setFilteredUsers] = useState([]);
 
   const onSubmit = async (data: CompanyProps, e: any) => {
     getCompanies(db);
@@ -21,25 +27,22 @@ export default function CompanyForm() {
     console.log(company);
   };
 
-  const test = async (id:string, company:any) => {
-    
-    
-  }
+
 
   useEffect(() => {
     const getCompanyData = async () => {
       const data: Promise<any> = getCompanies(db);
       setCompany(await data);
     };
+
     const getUserData = async () => {
       const fetchUserData: Promise<any> = getUsers(db);
       setUsers(await fetchUserData);
-      
     };
     getUserData();
     getCompanyData();
   }, []);
-  console.log(users);
+  console.log(filteredUsers);
 
   return (
     <div className="form-container">
@@ -47,23 +50,31 @@ export default function CompanyForm() {
         <h1 className="text-4xl font-extrabold dark:text-white">
           Select company:
         </h1>
-        {company.map((companyData: CompanyProps) => {
-          return(
+        {users.map((userData: FormDataProps) => {
+          return (
             <>
-            <p>{companyData.companyName}</p>
-            </>
-          )
-        })}
-        {users.map((userData:FormDataProps) => {
-        return(
-            <>
-            <div>
-              <button onClick={() => getUserDataByCompany(userData.companyInfo.companyName,db)}>click</button>
-            </div>
+              <div>
+                <ul className="flex">
+                  {
+                  userData.companyInfo.isActive == false ? ""
+                  : 
+                  <>
+                  <button className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+                    onClick={() =>
+                      deleteUserDataCompany(userData.id, userData.companyInfo.isActive, db)
+                    }
+                  >
+                    Remove
+                  </button>
+                  <p> {userData.userInfo.firstName} from:</p>
+                  <p className="pl-2">{userData.companyInfo.companyName}</p>
+                  </>
+                  }
+                </ul>
+              </div>
             </>
           );
-        
-      })}
+        })}
 
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="col-span-6 sm:col-span-3">

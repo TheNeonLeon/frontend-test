@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import db from "../../firebase/firebaseConfig";
-import { updateUserDetails, getCompanies, getUsers } from "../../utils/userApi";
+import {  getCompanies, getUsers } from "../../utils/userApi";
 import { FormDataProps } from "../form/type";
 
 export default function Profile() {
