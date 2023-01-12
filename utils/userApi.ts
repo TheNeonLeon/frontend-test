@@ -7,7 +7,7 @@ import {
   updateDoc,
 } from "firebase/firestore";
 
-import Router from 'next/router'
+import Router from "next/router";
 
 export const getUsers = async (db: any) => {
   try {
@@ -21,24 +21,24 @@ export const getUsers = async (db: any) => {
   }
 };
 
-export const deleteUserDataCompany = async (id:string, isActive:boolean, db:any) => {
+export const deleteUserDataCompany = async (
+  id: string,
+  isActive: boolean,
+  db: any
+) => {
   try {
     const newField = {
-    companyInfo: 
-    {
-      isActive: !isActive
-    }
-  }
+      companyInfo: {
+        isActive: !isActive,
+      },
+    };
     const userDoc = doc(db, "users", id);
     await updateDoc(userDoc, newField);
     Router.reload();
-    console.log("Updated user:", userDoc);
   } catch (error) {
     console.log(error);
-    
   }
 };
-
 
 export const addUser = async (
   firstName: string,
@@ -50,7 +50,7 @@ export const addUser = async (
   postalCode: number
 ) => {
   try {
-    const docRef = await addDoc(collection(db, "users"), {
+    await addDoc(collection(db, "users"), {
       userInfo: {
         firstName: firstName,
         lastName: lastName,
@@ -65,8 +65,6 @@ export const addUser = async (
         isActive: false,
       },
     });
-
-    console.log("Document written with ID: ", docRef.id);
   } catch (e) {
     console.error("Error adding document: ", e);
   }
@@ -85,20 +83,10 @@ export const getCompanies = async (db: any) => {
 
 export const createCompany = async (companyName: string) => {
   try {
-    const companyCollection = collection(db, "companies");
-    const snapshot = await getDocs(companyCollection);
-    const list = snapshot.docs.map((doc) => doc.data());
-
-    const docRef = await addDoc(collection(db, "companies"), {
+    await addDoc(collection(db, "companies"), {
       companyName: companyName,
     });
-    console.log("Document written with ID: ", docRef.id);
-    getCompanies(db);
-    if (list) {
-      console.log("list:", list);
-    } else {
-      console.log("Document does not exist");
-    }
+    Router.reload();
   } catch (e) {
     console.error("Error adding document: ", e);
   }

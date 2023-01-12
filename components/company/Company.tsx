@@ -1,3 +1,4 @@
+import { deleteDoc, doc } from "firebase/firestore";
 import { useTheme } from "next-themes";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -29,9 +30,7 @@ export default function CompanyForm() {
   };
 
   const onSubmit = async (data: CompanyProps, e: any) => {
-    getCompanies(db);
-    const company: Promise<any> = createCompany(data.companyName);
-    console.log(company);
+    createCompany(data.companyName);
   };
 
   useEffect(() => {
@@ -91,9 +90,10 @@ export default function CompanyForm() {
                 htmlFor="first-name"
                 className="block text-sm font-medium text-gray-700 dark:text-white"
               >
-                Company name:
+                Company name <span className="text-red-600">*</span> 
               </label>
               <input
+                required
                 type="text"
                 {...register("companyName")}
                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm dark:text-gray-600"
@@ -122,7 +122,7 @@ export default function CompanyForm() {
                       ) : (
                         <>
                           <button
-                            className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+                            className="text-white rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium mb-2 shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                             onClick={() =>
                               deleteUserDataCompany(
                                 userData.id,

@@ -19,6 +19,7 @@ export default function Form() {
   const { theme, setTheme } = useTheme();
 
   const router = useRouter();
+
   const toCompanyPage = (e: any) => {
     e.preventDefault();
     router.push("/company");
@@ -29,7 +30,6 @@ export default function Form() {
   };
 
   const onSubmit = async (data: FormDataProps, e: any) => {
-    console.log(data);
     const userInfo: any = await addUser(
       data?.userInfo.firstName,
       data?.userInfo.lastName,
@@ -47,7 +47,6 @@ export default function Form() {
       className: "toast-message",
     });
   };
-  console.log(userInfo);
 
   return (
     <div>
@@ -56,37 +55,42 @@ export default function Form() {
           <div className="mt-5 md:col-span-2 md:mt-0">
             <div className="overflow-hidden shadow sm:rounded-md">
               <div className="flex justify-between">
-                  <h3 className="text-4xl font-extrabold dark:text-white">
-                    Personal Information
-                  </h3>
-              <button onClick={() => setTheme(theme == 'light' ? 'dark' : 'light')}>
-                <svg
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth={1.5}
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                  aria-hidden="true"
-                  className="w-12 rounded-full bg-black dark:bg-white text-white dark:text-black"
+                <h3 className="text-4xl font-extrabold dark:text-white">
+                  Personal Information
+                </h3>
+                <button
+                  onClick={() => setTheme(theme == "light" ? "dark" : "light")}
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z"
-                  />
-                </svg>
-              </button>
+                  <svg
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth={1.5}
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                    aria-hidden="true"
+                    className="w-12 rounded-full bg-black dark:bg-white text-white dark:text-black"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z"
+                    />
+                  </svg>
+                </button>
               </div>
-              <form className="dark:text-gray-600" onSubmit={handleSubmit(onSubmit)}>
-                <p className="mt-1 text-sm text-gray-600">Create a person</p>
+              <form
+                className="dark:text-gray-600"
+                onSubmit={handleSubmit(onSubmit)}
+              >
                 <div className="light:bg-white dark:bg-gray-800 px-4 py-5 sm:p-6">
+                <p className="mb-2 text-base text-gray-600 dark:text-gray-400">Create a person</p>
                   <div className="grid grid-cols-6 gap-6 ">
                     <div className="col-span-6 sm:col-span-3">
                       <label
                         htmlFor="first-name"
                         className="block text-sm font-medium text-gray-700 dark:text-white"
                       >
-                        First name
+                        First name <span className="text-red-600">*</span>
                       </label>
                       <input
                         type="text"
@@ -101,7 +105,7 @@ export default function Form() {
                         htmlFor="last-name"
                         className="block text-sm font-medium text-gray-700 dark:text-white"
                       >
-                        Last name
+                        Last name <span className="text-red-600">*</span>
                       </label>
                       <input
                         required
@@ -116,7 +120,7 @@ export default function Form() {
                         htmlFor="email-address"
                         className="block text-sm font-medium text-gray-700 dark:text-white"
                       >
-                        Email address
+                        Email address <span className="text-red-600">*</span>
                       </label>
                       <input
                         required
@@ -194,28 +198,28 @@ export default function Form() {
                   </div>
                 </div>
                 <div className=" bg-gray-50 px-4 py-3 text-right sm:px-6 dark:bg-gray-800">
-                  <div className="flex  gap-5">
+                  <div className="flex gap-5">
                     <div className="flex justify-end">
-                    <button
-                      className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                      onClick={toCompanyPage}
-                    >
-                      Company page
-                    </button>
-                    <button
-                      className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                      onClick={toProfilePage}
-                    >
-                      Profile page
-                    </button>
+                      <button
+                        className="inline-flex justify-center rounded-md mr-2 border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                        onClick={toCompanyPage}
+                      >
+                        Company page
+                      </button>
+                      <button
+                        className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                        onClick={toProfilePage}
+                      >
+                        Profile page
+                      </button>
                     </div>
                     <div className="ml-auto">
-                    <button
-                      type="submit"
-                      className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                    >
-                      Add person
-                    </button>
+                      <button
+                        type="submit"
+                        className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                      >
+                        Add person
+                      </button>
                     </div>
                   </div>
                 </div>

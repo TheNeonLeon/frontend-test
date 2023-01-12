@@ -15,14 +15,14 @@ export default function Profile() {
 
   const [users, setUsers] = useState<FormDataProps[]>([]);
   const [company, setCompany] = useState<CompanyProps[]>([]);
-  const [companyName, setCompanyName] = useState<String>("");
+  const [companyName, setCompanyName] = useState<string>("");
   const [status, setStatus] = useState(false);
 
   const { theme, setTheme } = useTheme();
 
   const router = useRouter();
 
-  const updateUser = async (id: string, company: any, status: boolean) => {
+  const updateUser = async (id: string, company: string, status: boolean) => {
     const userDoc = doc(db, "users", id);
     const newField = {
       companyInfo: {
@@ -51,7 +51,6 @@ export default function Profile() {
     getCompanyData();
     getUserData();
   }, []);
-  console.log(companyName);
 
   return (
     <div className="flex h-screen items-center justify-center  profile-container">
