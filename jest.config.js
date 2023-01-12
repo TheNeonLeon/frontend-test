@@ -13,13 +13,28 @@ const customJestConfig = {
   // setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
   // if using TypeScript with a baseUrl set to the root directory then you need the below for alias' to work
   moduleDirectories: ['node_modules', '<rootDir>/'],
+  coverageDirectory: 'coverage',
+  collectCoverageFrom: ['/**/*.{js,jsx,ts,tsx}'],
   testEnvironment: 'jest-environment-jsdom',
+  modulePathIgnorePatterns: ['<rootDir>/firebase/'],
+  testPathIgnorePatterns: ['<rootDir>/firebase/', '<rootDir>/node_modules/firebase/app/dist/'],
   transform: {
     '^.+\\.ts?$': 'ts-jest',
   },
   transformIgnorePatterns: [
-    '<rootDir>/node_modules/'
-  ]
+    '<rootDir>/.next/', '<rootDir>/node_modules/', '<rootDir>/coverage', '<rootDir>/dist'
+    ],
+    moduleDirectories: ['<rootDir>/node_modules', '<rootDir>/'],
+    moduleNameMapper: {
+        "^.+.(svg|png|jpg)$": "jest-transform-stub",
+        '@/(.*)': '<rootDir>/$1',
+        '@modules/(.*)': '<rootDir>/components/$1',
+        '@firebase/(.*)': '<rootDir>/firebase/$1',
+        '@pages/(.*)': '<rootDir>/pages/$1',
+        '@styles/(.*)': '<rootDir>/styles/$1',
+    },
+    setupFilesAfterEnv: ['<rootDir>/jest.setup.js', './.jest/setEnvVars.js'],
+
 }
 
 // createJestConfig is exported this way to ensure that next/jest can load the Next.js config which is async

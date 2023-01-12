@@ -42,7 +42,7 @@ export default function Form() {
   return (
     <div className={styles.form}>
       <div className="mt-10 sm:mt-0">
-        <div className="md:grid md:grid-cols-3 md:gap-6">
+        <div>
           <div className="mt-5 md:col-span-2 md:mt-0">
             <form onSubmit={handleSubmit(onSubmit)}>
               <div className="overflow-hidden shadow sm:rounded-md">
@@ -119,7 +119,7 @@ export default function Form() {
                       </select>
                     </div>
 
-                    <div className="col-span-6">
+                    <div className="col-span-6 sm:col-span-3">
                       <label
                         htmlFor="street-address"
                         className="block text-sm font-medium text-gray-700"
@@ -165,7 +165,7 @@ export default function Form() {
                     </div>
                   </div>
                 </div>
-                <div className="flex space-x-60 bg-gray-50 px-4 py-3 text-right sm:px-6">
+                <div className="flex justify-center bg-gray-50 px-4 py-3 text-right sm:px-6">
                   <div className="flex">
                     <button
                       className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
@@ -179,8 +179,6 @@ export default function Form() {
                     >
                       Profile page
                     </button>
-                  </div>
-                  <div className="flex justify-center">
                     <button
                       type="submit"
                       className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"

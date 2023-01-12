@@ -15,7 +15,7 @@ function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <div className="flex justify-center">
+        <div>
           <Form />
         </div>
       </main>
