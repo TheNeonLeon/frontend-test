@@ -12,7 +12,7 @@ export default function Form() {
     watch,
     formState: { errors },
   } = useForm<FormDataProps>();
-  const [userInfo, setUserInfo] = useState([]);
+  const [userInfo, setUserInfo] = useState<FormDataProps[]>([]);
 
   const router = useRouter();
   const toCompanyPage = (e: any) => {
@@ -26,7 +26,7 @@ export default function Form() {
 
   const onSubmit = async (data: FormDataProps, e: any) => {
     console.log(data);
-    const userInfo: any = await addUser(
+    const userInfo:any = await addUser(
       data?.userInfo.firstName,
       data?.userInfo.lastName,
       data?.userInfo.email,
@@ -35,9 +35,9 @@ export default function Form() {
       data?.userInfo.city,
       data?.userInfo.postalCode
     );
-    setUserInfo(userInfo);
-    console.log(userInfo);
+    setUserInfo(await userInfo);
   };
+  console.log(userInfo);
 
   return (
     <div className={styles.form}>

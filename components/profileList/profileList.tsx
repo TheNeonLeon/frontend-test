@@ -20,15 +20,18 @@ export default function Profile() {
     handleSubmit,
     watch,
     formState: { errors },
-  } = useForm<any>();
+  } = useForm<FormData>();
 
-  const [users, setUsers] = useState([]);
-  const [company, setCompany] = useState([]);
-  const [companyName, setCompanyName] = useState("");
+  const [users, setUsers] = useState<FormDataProps[]>([]);
+  const [company, setCompany] = useState<CompanyProps[]>([]);
+  const [companyName, setCompanyName] = useState<String>("");
   const [status, setStatus] = useState(false);
 
   const router = useRouter();
-
+  const toHomePage = (e: any) => {
+    e.preventDefault();
+    router.push("/");
+  };
   const updateUser = async (id: string, company: any, status: boolean) => {
     const userDoc = doc(db, "users", id);
     const newField = {
@@ -37,12 +40,12 @@ export default function Profile() {
         isActive: !status,
       },
     };
-    if(companyName.length > 0){
+    if (companyName.length > 0) {
       setStatus(true);
       await updateDoc(userDoc, newField);
       router.reload();
-    }else{
-      alert("Please select a company")
+    } else {
+      alert("Please select a company");
     }
   };
 
@@ -58,65 +61,81 @@ export default function Profile() {
     getCompanyData();
     getUserData();
   }, []);
+  console.log(companyName);
 
   return (
     <div className="profile-container">
-      <h1 className="text-4xl font-extrabold dark:text-white">Profiles</h1>
-      <ul>
-        <>
-          {users.map((data: any, key) => {
-            return (
-              <>
-                {data.companyInfo.isActive == false ? (
-                  <div>
-                    <div className="flex border-2">
-                      <label
-                        htmlFor="first-name"
-                        className="block text-sm font-medium text-gray-700"
-                      ></label>
-
-                      <p key={key}>
-                        {data.userInfo.firstName} is not active in any company
-                      </p>
-                    </div>
-                    <>
+      <div className="w-full max-w-md p-4 bg-white border rounded-lg shadow-md sm:p-8 dark:bg-gray-800 dark:border-gray-700">
+        <div className="flex items-center justify-between mb-4">
+          <h5 className="text-4xl font-bold leading-none text-gray-900 dark:text-white">
+            Profiles
+          </h5>
+        </div>
+        <div className="flow-root">
+          <ul
+            role="list"
+            className="divide-y divide-gray-200 dark:divide-gray-700"
+          >
+            {users.map((data: FormDataProps, key) => {
+              return (
+                <>
+                  {data.companyInfo.isActive == false ? (
+                    <div>
                       <div className="flex">
                         <label
-                          htmlFor="country"
+                          htmlFor="first-name"
                           className="block text-sm font-medium text-gray-700"
-                        >
-                          Company
-                        </label>
-                        <select
-                          onChange={(e) => {
-                            setCompanyName(e.target.value);
-                          }}
-                          defaultValue="Choose"
-                          className="mt-1 w-full rounded-md border border-gray-300 bg-white py-2 px-3 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
-                        >
-                          <option value="Choose" disabled>
-                            Not Selectable
-                          </option>
-                          {company.map((companyData: CompanyProps, key) => {
-                            return <option key={key}>{companyData.companyName}</option>
-                          })}
-                        </select>
+                        ></label>
+                        <div>
+                          <p>
+                            {data.userInfo.firstName} is not active in any
+                            company
+                          </p>
+                          <p className="text-sm text-gray-500 truncate dark:text-gray-400">
+                            {data.userInfo.email}
+                          </p>
+                        </div>
                       </div>
-                      <button
-                        onClick={() => updateUser(data.id, companyName, status)}
-                      >
-                        Add to company
-                      </button>
-                    </>
-                  </div>
-                ) : (
-                  ""
-                )}
-              </>
-            );
-          })}
-        </>
-      </ul>
+                      <>
+                        <div className="flex">
+                          <select
+                            onChange={(e) => {
+                              setCompanyName(e.target.value);
+                            }}
+                            defaultValue="Choose"
+                            className="mt-1 rounded-md border border-gray-300 bg-white py-2 px-3 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                          >
+                            <option value="Choose" disabled>
+                              Choose company:
+                            </option>
+                            {company.map((companyData: CompanyProps, key) => {
+                              return (
+                                <option key={key}>
+                                  {companyData.companyName}
+                                </option>
+                              );
+                            })}
+                          </select>
+                        </div>
+                        <button
+                          className="inline-flex justify-center mt-3 rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                          onClick={() =>
+                            updateUser(data.id, companyName, status)
+                          }
+                        >
+                          Add to company
+                        </button>
+                      </>
+                    </div>
+                  ) : (
+                    ""
+                  )}
+                </>
+              );
+            })}
+          </ul>
+        </div>
+      </div>
     </div>
   );
 }

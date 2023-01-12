@@ -27,7 +27,7 @@ export default function CompanyForm() {
 
   const onSubmit = async (data: CompanyProps, e: any) => {
     getCompanies(db);
-    const company: any = createCompany(data.companyName);
+    const company: Promise<any> = createCompany(data.companyName);
     console.log(company);
   };
 
