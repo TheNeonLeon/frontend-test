@@ -28,10 +28,7 @@ export default function Profile() {
   const [status, setStatus] = useState(false);
 
   const router = useRouter();
-  const toHomePage = (e: any) => {
-    e.preventDefault();
-    router.push("/");
-  };
+
   const updateUser = async (id: string, company: any, status: boolean) => {
     const userDoc = doc(db, "users", id);
     const newField = {
@@ -64,7 +61,7 @@ export default function Profile() {
   console.log(companyName);
 
   return (
-    <div className="profile-container">
+    <div className="flex h-screen items-center justify-center  profile-container">
       <div className="w-full max-w-md p-4 bg-white border rounded-lg shadow-md sm:p-8 dark:bg-gray-800 dark:border-gray-700">
         <div className="flex items-center justify-between mb-4">
           <h5 className="text-4xl font-bold leading-none text-gray-900 dark:text-white">
@@ -103,7 +100,7 @@ export default function Profile() {
                               setCompanyName(e.target.value);
                             }}
                             defaultValue="Choose"
-                            className="mt-1 rounded-md border border-gray-300 bg-white py-2 px-3 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                            className="mt-1 rounded-md border border-gray-300 bg-white py-2 px-3 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm dark:text-gray-600"
                           >
                             <option value="Choose" disabled>
                               Choose company:
@@ -134,6 +131,20 @@ export default function Profile() {
               );
             })}
           </ul>
+        </div>
+        <div className="mt-7 bg-gray-50 px-4 py-3 text-center sm:px-6 dark:bg-gray-800">
+          <button
+            className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+            onClick={() => router.push("/")}
+          >
+            Go to Home Page
+          </button>
+          <button
+            className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+            onClick={() => router.push("/company")}
+          >
+            Go to Company Page
+          </button>
         </div>
       </div>
     </div>

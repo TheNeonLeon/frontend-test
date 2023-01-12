@@ -8,6 +8,7 @@ import {
 } from "firebase/firestore";
 
 import Router from 'next/router'
+import { toast } from "react-toastify";
 
 export const getUsers = async (db: any) => {
   try {
@@ -33,6 +34,10 @@ export const deleteUserDataCompany = async (id:string, isActive:boolean, db:any)
     await updateDoc(userDoc, newField);
     Router.reload();
     console.log("Updated user:", userDoc);
+    toast.success("User removed from company 🧑", {
+      bodyClassName: "black-background",
+      position: toast.POSITION.TOP_RIGHT
+    });
   } catch (error) {
     console.log(error);
     

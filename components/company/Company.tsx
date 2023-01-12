@@ -1,6 +1,7 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { ToastContainer } from "react-toastify";
 import db from "../../firebase/firebaseConfig";
 import {
   createCompany,
@@ -62,14 +63,14 @@ export default function CompanyForm() {
           <div className="col-span-6 sm:col-span-3">
             <label
               htmlFor="first-name"
-              className="block text-sm font-medium text-gray-700"
+              className="block text-sm font-medium text-gray-700 dark:text-white"
             >
               Company name
             </label>
             <input
               type="text"
               {...register("companyName")}
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm dark:text-gray-600"
             />
           </div>
           <div className="flex space-x-3">
@@ -142,7 +143,7 @@ export default function CompanyForm() {
           Go to Home Page
         </button>
         <button
-          onClick={toHomePage}
+          onClick={() => router.push('/profile')}
           type="submit"
           className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
         >
@@ -165,6 +166,7 @@ export default function CompanyForm() {
         </button>
         </div>
       </div>
+      <ToastContainer autoClose={8000} />
     </div>
   );
 }

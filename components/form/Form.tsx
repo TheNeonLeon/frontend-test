@@ -4,7 +4,10 @@ import { useForm } from "react-hook-form";
 import db from "../../firebase/firebaseConfig";
 import { addUser, getUsers } from "../../utils/userApi";
 import { FormDataProps } from "./type";
-import styles from "./Form.module.css";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useTheme } from "next-themes";
+
 export default function Form() {
   const {
     register,
@@ -13,6 +16,7 @@ export default function Form() {
     formState: { errors },
   } = useForm<FormDataProps>();
   const [userInfo, setUserInfo] = useState<FormDataProps[]>([]);
+  const { theme, setTheme } = useTheme();
 
   const router = useRouter();
   const toCompanyPage = (e: any) => {
@@ -26,7 +30,7 @@ export default function Form() {
 
   const onSubmit = async (data: FormDataProps, e: any) => {
     console.log(data);
-    const userInfo:any = await addUser(
+    const userInfo: any = await addUser(
       data?.userInfo.firstName,
       data?.userInfo.lastName,
       data?.userInfo.email,
@@ -36,27 +40,51 @@ export default function Form() {
       data?.userInfo.postalCode
     );
     setUserInfo(await userInfo);
+
+    toast.success("User added 🧑", {
+      bodyClassName: "black-background",
+      position: toast.POSITION.TOP_RIGHT,
+      className: "toast-message",
+    });
   };
   console.log(userInfo);
 
   return (
-    <div className={styles.form}>
-      <div className="mt-10 sm:mt-0">
+    <div>
+      <div className="flex h-screen items-center justify-center mt-20 sm:mt-0">
         <div>
           <div className="mt-5 md:col-span-2 md:mt-0">
-            <form onSubmit={handleSubmit(onSubmit)}>
-              <div className="overflow-hidden shadow sm:rounded-md">
-                <h3 className="text-4xl font-extrabold dark:text-white">
-                  Personal Information
-                </h3>
+            <div className="overflow-hidden shadow sm:rounded-md">
+              <div className="flex justify-between">
+                  <h3 className="text-4xl font-extrabold dark:text-white">
+                    Personal Information
+                  </h3>
+              <button onClick={() => setTheme(theme == 'light' ? 'dark' : 'light')}>
+                <svg
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth={1.5}
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                  aria-hidden="true"
+                  className="w-12 rounded-full bg-black dark:bg-white text-white dark:text-black"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z"
+                  />
+                </svg>
+              </button>
+              </div>
+              <form className="dark:text-gray-600" onSubmit={handleSubmit(onSubmit)}>
                 <p className="mt-1 text-sm text-gray-600">Create a person</p>
-
-                <div className="bg-white px-4 py-5 sm:p-6">
-                  <div className="grid grid-cols-6 gap-6">
+                <div className="light:bg-white dark:bg-gray-800 px-4 py-5 sm:p-6">
+                  <div className="grid grid-cols-6 gap-6 ">
                     <div className="col-span-6 sm:col-span-3">
                       <label
                         htmlFor="first-name"
-                        className="block text-sm font-medium text-gray-700"
+                        className="block text-sm font-medium text-gray-700 dark:text-white"
                       >
                         First name
                       </label>
@@ -71,7 +99,7 @@ export default function Form() {
                     <div className="col-span-6 sm:col-span-3">
                       <label
                         htmlFor="last-name"
-                        className="block text-sm font-medium text-gray-700"
+                        className="block text-sm font-medium text-gray-700 dark:text-white"
                       >
                         Last name
                       </label>
@@ -86,7 +114,7 @@ export default function Form() {
                     <div className="col-span-6 sm:col-span-4">
                       <label
                         htmlFor="email-address"
-                        className="block text-sm font-medium text-gray-700"
+                        className="block text-sm font-medium text-gray-700 dark:text-white"
                       >
                         Email address
                       </label>
@@ -102,7 +130,7 @@ export default function Form() {
                     <div className="col-span-6 sm:col-span-3">
                       <label
                         htmlFor="country"
-                        className="block text-sm font-medium text-gray-700"
+                        className="block text-sm font-medium text-gray-700 dark:text-white"
                       >
                         Country
                       </label>
@@ -122,7 +150,7 @@ export default function Form() {
                     <div className="col-span-6 sm:col-span-3">
                       <label
                         htmlFor="street-address"
-                        className="block text-sm font-medium text-gray-700"
+                        className="block text-sm font-medium text-gray-700 dark:text-white"
                       >
                         Street address
                       </label>
@@ -137,7 +165,7 @@ export default function Form() {
                     <div className="col-span-6 sm:col-span-6 lg:col-span-2">
                       <label
                         htmlFor="city"
-                        className="block text-sm font-medium text-gray-700"
+                        className="block text-sm font-medium text-gray-700 dark:text-white"
                       >
                         City
                       </label>
@@ -152,7 +180,7 @@ export default function Form() {
                     <div className="col-span-6 sm:col-span-3 lg:col-span-2">
                       <label
                         htmlFor="postal-code"
-                        className="block text-sm font-medium text-gray-700"
+                        className="block text-sm font-medium text-gray-700 dark:text-white"
                       >
                         ZIP / Postal code
                       </label>
@@ -165,7 +193,7 @@ export default function Form() {
                     </div>
                   </div>
                 </div>
-                <div className="flex justify-center bg-gray-50 px-4 py-3 text-right sm:px-6">
+                <div className="flex justify-center bg-gray-50 px-4 py-3 text-right sm:px-6 dark:bg-gray-800">
                   <div className="flex">
                     <button
                       className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
@@ -187,11 +215,12 @@ export default function Form() {
                     </button>
                   </div>
                 </div>
-              </div>
-            </form>
+              </form>
+            </div>
           </div>
         </div>
       </div>
+      <ToastContainer autoClose={8000} />
     </div>
   );
 }
