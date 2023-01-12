@@ -12,7 +12,7 @@ npm install
 npm run dev
 
 ```
-
+For making the database work properly, you have to setup a .env.local file in root directory and copy paste the environment variables which you'll find in the ".env.local.example" file
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 ## Learn More
