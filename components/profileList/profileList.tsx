@@ -42,7 +42,7 @@ export default function Profile() {
       await updateDoc(userDoc, newField);
       router.reload();
     }else{
-      alert("Error")
+      alert("Please select a company")
     }
   };
 
