@@ -1,31 +1,24 @@
 import {
-  collection,
   doc,
-  getDoc,
-  getDocs,
-  setDoc,
   updateDoc,
+  deleteDoc
 } from "firebase/firestore";
+import { useTheme } from "next-themes";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
 import db from "../../firebase/firebaseConfig";
 import { getCompanies, getUsers } from "../../utils/userApi";
 import { CompanyProps } from "../company/type";
 import { FormDataProps } from "../form/type";
 
 export default function Profile() {
-  const {
-    register,
-    handleSubmit,
-    watch,
-    formState: { errors },
-  } = useForm<FormData>();
 
   const [users, setUsers] = useState<FormDataProps[]>([]);
   const [company, setCompany] = useState<CompanyProps[]>([]);
   const [companyName, setCompanyName] = useState<String>("");
   const [status, setStatus] = useState(false);
+
+  const { theme, setTheme } = useTheme();
 
   const router = useRouter();
 
@@ -67,6 +60,23 @@ export default function Profile() {
           <h5 className="text-4xl font-bold leading-none text-gray-900 dark:text-white">
             Profiles
           </h5>
+          <button onClick={() => setTheme(theme == "light" ? "dark" : "light")}>
+          <svg
+            fill="none"
+            stroke="currentColor"
+            strokeWidth={1.5}
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
+            className="w-12 rounded-full bg-black dark:bg-white text-white dark:text-black"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z"
+            />
+          </svg>
+        </button>
         </div>
         <div className="flow-root">
           <ul
@@ -132,9 +142,9 @@ export default function Profile() {
             })}
           </ul>
         </div>
-        <div className="mt-7 bg-gray-50 px-4 py-3 text-center sm:px-6 dark:bg-gray-800">
+        <div className="mt-7 pb-0 pt-12 px-4 py-3 text-center sm:px-6 dark:bg-gray-800">
           <button
-            className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+            className="inline-flex justify-center mr-4 mb-1 rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
             onClick={() => router.push("/")}
           >
             Go to Home Page

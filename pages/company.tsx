@@ -3,10 +3,6 @@ import CompanyForm from "../components/company/Company";
 import styles from "../styles/Home.module.css";
 
 export default function Company() {
-    // console.log(getUsers(db).then(response => console.log(response)
-    // ));
-    // console.log(updateUser().then(response => console.log(response)))
-    
       return (
         <>
         <Head>
